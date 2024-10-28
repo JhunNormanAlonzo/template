@@ -14,12 +14,12 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#file" data-bs-toggle="collapse" href="#">
+            <a class="nav-link collapsed" data-bs-target="#students" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-files"></i><span>Students</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="file" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="students" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="">
+                    <a href="{{route('students.create')}}">
                         <i class="bi bi-circle"></i>
                             <span>Create Student</span>
                     </a>
@@ -35,10 +35,10 @@
         </li><!-- End Charts Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#file" data-bs-toggle="collapse" href="#">
+            <a class="nav-link collapsed" data-bs-target="#courses" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-people"></i><span>Courses</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="file" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="courses" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="">
                         <i class="bi bi-circle"></i>
@@ -52,6 +52,30 @@
                         <span>View Courses</span>
                     </a>
                 </li>
+            </ul>
+        </li><!-- End Charts Nav -->
+
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#school_years" data-bs-toggle="collapse" href="">
+                <i class="bi bi-calendar"></i><span>School Year</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="school_years" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{route('school_years.index')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>View School Year</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('school_years.create')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>Create School Year</span>
+                    </a>
+                </li>
+
+
             </ul>
         </li><!-- End Charts Nav -->
 
@@ -69,28 +93,13 @@
             </ul>
         </li><!-- End Charts Nav -->
 
+
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#import" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-filetype-csv"></i><span>History</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" href="">
+                <i class="bi bi-question-circle"></i>
+                <span>Logs</span>
             </a>
-            <ul id="import" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="">
-                        <i class="bi bi-circle"></i>
-                        <span>Import Deductions/Wages</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="">
-                        <i class="bi bi-circle"></i>
-                        <span>Export Deductions/Wages</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Charts Nav -->
-
-
+        </li>
     </ul>
 
-</aside><!-- End Sidebar-->
+</aside>
