@@ -26,7 +26,7 @@
                 </li>
 
                 <li>
-                    <a href="">
+                    <a href="{{route('students.index')}}">
                         <i class="bi bi-circle"></i>
                         <span>View Students</span>
                     </a>
@@ -40,14 +40,14 @@
             </a>
             <ul id="courses" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="">
+                    <a href="{{route('courses.create')}}">
                         <i class="bi bi-circle"></i>
                         <span>Create Course</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="">
+                    <a href="{{route('courses.index')}}">
                         <i class="bi bi-circle"></i>
                         <span>View Courses</span>
                     </a>
@@ -85,9 +85,15 @@
             </a>
             <ul id="transaction" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="">
+                    <a href="{{route('fees.create')}}">
                         <i class="bi bi-circle"></i>
-                        <span>Add Payment</span>
+                        <span>Add Fee</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('fees.index')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>View Fee</span>
                     </a>
                 </li>
             </ul>

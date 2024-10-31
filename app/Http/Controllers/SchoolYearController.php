@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use function App\Providers\warningDelete;
 
 class SchoolYearController extends Controller
 {
@@ -14,6 +15,7 @@ class SchoolYearController extends Controller
     public function index()
     {
         $school_years = SchoolYear::all();
+        warningDelete();
         return view('school_years.index', compact('school_years'));
     }
 
@@ -60,7 +62,7 @@ class SchoolYearController extends Controller
      */
     public function edit(SchoolYear $schoolYear)
     {
-        return view('shool_years.edit', compact('schoolYear'));
+        return view('school_years.edit', compact('schoolYear'));
     }
 
     /**

@@ -5,4 +5,4 @@
     "form-control form-control-sm ";
 @endphp
 
-<textarea name="{{$name}}" {{$attributes->merge(['class' => $class])}} cols="30" rows="2"></textarea>
+<textarea name="{{$name}}" {{$attributes->merge(['class' => $class])}} cols="30" rows="2">{{$slot}}</textarea>

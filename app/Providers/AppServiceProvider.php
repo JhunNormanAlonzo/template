@@ -20,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        function warningDelete(){
+            return confirmDelete("Delete!","Are you sure to delete?");
+        }
         Schema::defaultStringLength(191);
     }
 }
