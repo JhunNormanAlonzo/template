@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CourseController extends Controller
 {
@@ -12,7 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::all();
+        return view('courses.index', compact('courses'));
     }
 
     /**
@@ -20,7 +22,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -28,7 +30,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|unique:courses,name',
+            'description' => 'required'
+        ]);
+        Course::create($data);
+        Alert::success('Success', 'Created Successfully');
+        return redirect()->route('courses.index');
     }
 
     /**
@@ -44,7 +52,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return view('courses.edit', compact('course'));
     }
 
     /**
@@ -52,7 +60,15 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $course_id = $course->id;
+        $data = $request->validate([
+            'name' => "required|unique:courses,name,$course_id",
+            'description' => 'required'
+        ]);
+
+        $course->update($data);
+        Alert::success('Success', 'Updated Successfully');
+        return redirect()->route('courses.index');
     }
 
     /**
@@ -60,6 +76,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        Alert::success('Success', 'Deleted Successfully');
+        return redirect()->route('courses.index');
     }
 }

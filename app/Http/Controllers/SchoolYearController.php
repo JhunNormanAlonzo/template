@@ -52,7 +52,7 @@ class SchoolYearController extends Controller
      */
     public function show(SchoolYear $schoolYear)
     {
-        //
+
     }
 
     /**
@@ -60,7 +60,7 @@ class SchoolYearController extends Controller
      */
     public function edit(SchoolYear $schoolYear)
     {
-        //
+        return view('shool_years.edit', compact('schoolYear'));
     }
 
     /**
@@ -68,7 +68,21 @@ class SchoolYearController extends Controller
      */
     public function update(Request $request, SchoolYear $schoolYear)
     {
-        //
+        $school_year_id = $schoolYear->id;
+        $request->validate([
+            'name' => "required|unique:school_years,name,$school_year_id"
+        ]);
+
+        if ($request->activation) {
+            SchoolYear::where('activation', true)->update(['activation' => false]);
+        }
+        $schoolYear->update([
+            'name' => $request->name,
+            'activation' => $request->activation
+        ]);
+
+        Alert::success('Success', 'Updated Successfully');
+        return redirect()->route('school_years.index');
     }
 
     /**
