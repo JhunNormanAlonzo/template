@@ -79,9 +79,7 @@
     </form>
 
     @section('script')
-        <script>
-            $("#table").DataTable();
-        </script>
+
     @endsection
 
 

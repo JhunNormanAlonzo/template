@@ -25,4 +25,9 @@ class Fee extends Model
     {
         return $this->belongsTo(SchoolYear::class);
     }
+
+    public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

@@ -78,7 +78,7 @@ class StudentController extends Controller
     {
         $courses = Course::all();
         $year_levels = YearLevel::all();
-        return redirect()->route('students.index', compact('student', 'year_levels', 'courses'));
+        return view('students.edit', compact('student', 'year_levels', 'courses'));
     }
 
     /**
@@ -86,7 +86,27 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
+
         //
+        $user_id = $student->user->id;
+        $student_id = $student->id;
+        $request->validate([
+            'name' => "required",
+            "email" => "required|email|unique:users,email,$user_id",
+            "course_id" => "required",
+            "year_level_id" => "required",
+            "student_number" => "required|unique:students,student_number,$student_id"
+        ]);
+
+        $student->user->update([
+           "name" => $request->name,
+           "email" => $request->email,
+        ]);
+        $student->update([
+            "course_id" => $request->course_id,
+            "year_level_id" => $request->year_level_id,
+            "student_number" => $request->student_number,
+        ]);
 
         Alert::success('Success', 'Updated Successfully');
         return redirect()->route('students.index');
