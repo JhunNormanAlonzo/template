@@ -17,7 +17,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::all();
+        return view('payments.index', compact('payments'));
     }
 
     /**
@@ -45,6 +46,8 @@ class PaymentController extends Controller
         $year_level = $student->yearLevel->name;
         $amount = $request->amount;
 
+        $fee = Fee::find($fee_id);
+
         Payment::create([
             'user_id' => $user_id,
             'student_id' => $student_id,
@@ -54,11 +57,12 @@ class PaymentController extends Controller
             'email' => $email,
             'course' => $course,
             'year_level' => $year_level,
+            'fee_name' => $fee->name,
             'amount' => $amount,
         ]);
 
         Alert::success('Success', 'Payment Recorded');
-        return redirect()->back();g
+        return redirect()->back();
     }
 
     /**
@@ -106,5 +110,33 @@ class PaymentController extends Controller
             ->where("activation", true)
             ->get();
         return response()->json($fees);
+    }
+
+    public function checkPayment(Request $request)
+    {
+        $student_number = $request->student_number;
+        $fee_id = $request->fee_id;
+
+        $payments = Payment::where('student_number', $student_number)->where('fee_id', $fee_id)->get();
+        $fee = Fee::find($fee_id);
+        $amount_to_pay = $fee->amount;
+        $data = [
+            'amount_to_pay' => $fee->amount,
+            'payments' => $payments->pluck('amount', 'created_at'),
+            'total_pay' => $payments->sum('amount'),
+            'balance' => $amount_to_pay - $payments->sum('amount')
+        ];
+        return response()->json($data);
+    }
+
+    public function paymentLogs(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $student_number = $request->student_number;
+
+        $student = Student::where('student_number',$student_number)->first();
+
+        $payment_logs = $student->payments()->get();
+
+        return response()->json($payment_logs);
     }
 }

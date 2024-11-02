@@ -22,7 +22,7 @@
                             <i class="bi bi-cart"></i>
                         </div>
                         <div class="ps-3">
-                            <h6>145</h6>
+                            <h6>{{$fees}}</h6>
                         </div>
                     </div>
                 </div>
@@ -32,14 +32,14 @@
         <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
                 <div class="card-body">
-                    <h5 class="card-title">Pendings</h5>
+                    <h5 class="card-title">Sales</h5>
 
                     <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-dash-circle"></i>
+                            <i class="bi bi-graph-up"></i>
                         </div>
                         <div class="ps-3">
-                            <h6>3,264</h6>
+                            <h6>{{number_format($sales, '2')}}</h6>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                             <i class="bi bi-people"></i>
                         </div>
                         <div class="ps-3">
-                            <h6>1244</h6>
+                            <h6>{{$student_counts}}</h6>
                         </div>
                     </div>
 
@@ -76,38 +76,20 @@
                     <x-th>Course</x-th>
                     <x-th>Year Level</x-th>
                     <x-th>Balance</x-th>
+                    <x-th>Total Fee</x-th>
+                    <x-th>Status</x-th>
                 </x-thead>
                 <x-tbody>
-                    <x-tr>
-                        <x-td>Jhun Norman Alonzo</x-td>
-                        <x-td>First Year</x-td>
-                        <x-td>BSIT</x-td>
-                        <x-td>1,500</x-td>
-                    </x-tr>
-                    <x-tr>
-                        <x-td>Jhun Norman Alonzo</x-td>
-                        <x-td>First Year</x-td>
-                        <x-td>BSIT</x-td>
-                        <x-td>1,500</x-td>
-                    </x-tr>
-                    <x-tr>
-                        <x-td>Jhun Norman Alonzo</x-td>
-                        <x-td>First Year</x-td>
-                        <x-td>BSIT</x-td>
-                        <x-td>1,500</x-td>
-                    </x-tr>
-                    <x-tr>
-                        <x-td>Jhun Norman Alonzo</x-td>
-                        <x-td>First Year</x-td>
-                        <x-td>BSIT</x-td>
-                        <x-td>1,500</x-td>
-                    </x-tr>
-                    <x-tr>
-                        <x-td>Jhun Norman Alonzo</x-td>
-                        <x-td>First Year</x-td>
-                        <x-td>BSIT</x-td>
-                        <x-td>1,500</x-td>
-                    </x-tr>
+                   @foreach($students as $student)
+                        <x-tr>
+                            <x-td>{{$student->user->name}}</x-td>
+                            <x-td>{{$student->course->name}}</x-td>
+                            <x-td>{{$student->yearLevel->name}}</x-td>
+                            <x-td>{{number_format($student->getBalance(), 2)}}</x-td>
+                            <x-td>{{number_format($student->getTotalFees(), 2)}}</x-td>
+                            <x-td>{{$student->getBalance() == 0 ? "Paid" : "Unpaid"}}</x-td>
+                        </x-tr>
+                   @endforeach
 
                 </x-tbody>
             </x-table>

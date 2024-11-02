@@ -35,6 +35,18 @@
                    </div>
                </div>
 
+                <div class="col-12" id="student_payment_container" hidden>
+                    <div class="card">
+                        <div class="card-header">
+                            Student Payment Logs
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12" id="payment_container"></div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -58,7 +70,7 @@
                             </div>
                             <div class="col-12">
                                 <x-label>Amount</x-label>
-                                <x-input-number name="amount"></x-input-number>
+                                <x-input-number step="00.01" name="amount"></x-input-number>
                                 <x-input-number hidden name="fee_id"></x-input-number>
                             </div>
                         </div>
@@ -106,10 +118,13 @@
         }
 
         $(document).ready(function () {
+
             $("#student_number").on("keyup", function (event) {
-                // Check if the Enter key (key code 13) was pressed
                 const student_number = this.value;
+
+                // Check if the Enter key was pressed
                 if (event.key === "Enter") {
+                    // Fetch the fee list for the given student number
                     fetch("{{ route('payments.fee-lists') }}", {
                         method: "POST",
                         headers: {
@@ -117,47 +132,116 @@
                             "X-CSRF-TOKEN": "{{ csrf_token() }}"
                         },
                         body: JSON.stringify({ student_number: student_number })
-                    }).then(function(response){
-                        return response.json();
-                    }).then(function(fees) {
+                    })
+                    .then(function(response) {return response.json();})
+                    .then(function(fees) {
                         const student_fee_container = document.getElementById("student_fee_container");
                         student_fee_container.hidden = false;
                         const fee_container = document.getElementById("fee_container");
                         fee_container.innerHTML = '';
 
+                        let tableRowsPromises = fees.map(function(element) {
+                            return fetch("{{ route('payments.check-payment') }}", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({
+                                    student_number: student_number,
+                                    fee_id: element.id
+                                })
+                            }).then(function(response) {
+                                    return response.json();
+                            }).then(function(data) {
+                                    const isDisabled = data.balance <= 0;
+                                    return `
+                                        <x-tr>
+                                            <x-td>
+                                                <x-btn
+                                                    onclick="openModal(${element.id}, ${student_number}, ${data.balance})"
+                                                    class="${isDisabled ? 'disabled' : ''}"
+                                                    >${isDisabled ? "Paid" : "Pay"}</x-btn>
+                                            </x-td>
+                                            <x-td>${element.name}</x-td>
+                                            <x-td>${element.amount}</x-td>
+                                            <x-td>${element.school_year.name}</x-td>
+                                            <x-td>${data.balance}</x-td>
+                                        </x-tr>
+                                    `;
+                            });
+                        });
+
+                        // Wait for all promises to resolve
+                        Promise.all(tableRowsPromises).then(function(tableRows) {
+                            // Populate the table with the generated rows
+                            fee_container.innerHTML = `
+                                <x-table id="table">
+                                    <x-thead>
+                                        <x-tr>
+                                            <x-th>Action</x-th>
+                                            <x-th>Name</x-th>
+                                            <x-th>Amount</x-th>
+                                            <x-th>School Year</x-th>
+                                            <x-th>Balance</x-th>
+                                        </x-tr>
+                                    </x-thead>
+                                    <x-tbody>
+                                        ${tableRows.join('')} <!-- Insert the rows here -->
+                                    </x-tbody>
+                                </x-table>
+                            `;
+                        });
+                    });
 
 
+                    fetch("{{ route('payments.payment-logs') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({ student_number: student_number })
+                    }).then(function(response) {
+                        return response.json();
+                    }).then(function (payment_logs){
+                        const student_payment_container = document.getElementById("student_payment_container");
+                        student_payment_container.hidden = false;
+                        const payment_container = document.getElementById("payment_container");
+                        payment_container.innerHTML = '';
 
-                        let tableRows = fees.map(function(element) {
+
+                        const tableRowsPromises = payment_logs.map(function(log) {
                             return `
                                 <x-tr>
-                                    <x-td><x-btn onclick="openModal(${element.id}, ${student_number}, ${element.amount})" >pay</x-btn></x-td>
-                                    <x-td>${element.name}</x-td>
-                                    <x-td>${element.amount}</x-td>
-                                    <x-td>${element.school_year.name}</x-td>
+                                    <x-td>${log.fee_name}</x-td>
+                                    <x-td>${log.amount}</x-td>
+                                    <x-td>${new Date(log.created_at).toLocaleDateString()}</x-td>
                                 </x-tr>
-                            `;
-                        }).join('');
+                            `
+                        });
 
-                        fee_container.innerHTML += `
-                            <x-table id="table">
-                                <x-thead>
-                                    <x-tr>
-                                        <x-th>Action</x-th>
-                                        <x-th>Name</x-th>
-                                        <x-th>Amount</x-th>
-                                        <x-th>School Year</x-th>
-                                    </x-tr>
-                                </x-thead>
-                                <x-tbody>
-                                    ${tableRows} <!-- Insert the rows here -->
-                                </x-tbody>
-                            </x-table>
-                        `;
+                        const tableHTML = `
+        <x-table id="payment-table">
+            <x-thead>
+                <x-tr>
+                    <x-th>Fee</x-th>
+                    <x-th>Amount</x-th>
+                    <x-th>Date</x-th>
+                </x-tr>
+            </x-thead>
+            <x-tbody>
+                ${tableRowsPromises.join(' ')} <!-- Insert the rows here -->
+            </x-tbody>
+        </x-table>
+    `;
 
+                        // Insert the table into the payment container
+                        payment_container.innerHTML = tableHTML;
                     });
                 }
             });
+
         });
 
         $("#table").DataTable();

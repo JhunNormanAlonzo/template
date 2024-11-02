@@ -101,7 +101,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="">
+            <a class="nav-link collapsed" href="{{route('payments.index')}}">
                 <i class="bi bi-question-circle"></i>
                 <span>Logs</span>
             </a>

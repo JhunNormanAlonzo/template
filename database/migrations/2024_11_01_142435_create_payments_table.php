@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('course');
             $table->string('year_level');
+            $table->string('fee_name');
             $table->decimal("amount", 8,2);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
