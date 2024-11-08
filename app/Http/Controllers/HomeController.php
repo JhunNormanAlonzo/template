@@ -31,6 +31,8 @@ class HomeController extends Controller
         $student_counts = Student::count();
         $sales = Payment::sum('amount');
 
-        return view('home', compact('fees', 'students', 'student_counts', 'sales'));
+        $payments = Payment::all();
+
+        return view('home', compact('fees', 'students', 'student_counts', 'sales', 'payments'));
     }
 }

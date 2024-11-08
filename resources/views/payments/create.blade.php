@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body">
                             <br>
-                            <x-input-number id="student_number" value="20211024" autofocus></x-input-number>
+                            <x-input-number id="student_number" value="" autofocus></x-input-number>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                                         <x-tr>
                                             <x-td>
                                                 <x-btn
-                                                    onclick="openModal(${element.id}, ${student_number}, ${data.balance})"
+                                                    onclick="openModal(${element.id}, '${student_number}', ${data.balance})"
                                                     class="${isDisabled ? 'disabled' : ''}"
                                                     >${isDisabled ? "Paid" : "Pay"}</x-btn>
                                             </x-td>

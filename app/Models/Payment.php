@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
@@ -26,5 +27,10 @@ class Payment extends Model
     public function fee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Fee::class);
+    }
+
+    public function collector() : BelongsTo
+    {
+        return $this->belongsTo(User::class, 'collector_id');
     }
 }

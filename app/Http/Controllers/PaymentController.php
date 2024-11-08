@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PaymentController extends Controller
@@ -48,7 +49,10 @@ class PaymentController extends Controller
 
         $fee = Fee::find($fee_id);
 
+        $collector_id = Auth::user()->id;
+
         Payment::create([
+            'collector_id' => $collector_id,
             'user_id' => $user_id,
             'student_id' => $student_id,
             'fee_id' => $fee_id,
