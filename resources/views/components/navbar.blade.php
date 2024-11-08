@@ -1,11 +1,18 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="{{route('home')}}" class="logo d-flex align-items-center">
-{{--            <img src="{{asset('assets/images/bg.jpg')}}" alt="">--}}
-            <span class="d-none d-lg-block">{{config('app.name')}}</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
+        @auth
+            <a href="{{route('home')}}" class="logo d-flex align-items-center">
+                {{--            <img src="{{asset('assets/images/bg.jpg')}}" alt="">--}}
+                <span class="d-none d-lg-block">{{config('app.name')}}</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        @else
+            <a class="logo d-flex align-items-center">
+                {{--            <img src="{{asset('assets/images/bg.jpg')}}" alt="">--}}
+                <span class="d-none d-lg-block">{{config('app.name')}}</span>
+            </a>
+        @endauth
     </div><!-- End Logo -->
 
 {{--    <div class="search-bar">--}}
@@ -25,9 +32,16 @@
 {{--            </li><!-- End Search Icon-->--}}
 
 
-            <li class="nav-item dropdown">
-                <a href="{{route('payments.create')}}" class="btn btn-sm btn-warning mx-3">Payment</a>
-            </li>
+            @auth
+                <li class="nav-item dropdown">
+                    <a href="{{route('payments.create')}}" class="btn btn-sm btn-warning mx-3">Payment</a>
+                </li>
+            @else
+                <li class="nav-item dropdown">
+                    <a href="{{route('login')}}" class="btn btn-sm btn-warningg mx-3">Login</a>
+                </li>
+            @endauth
+
 {{--            <li class="nav-item dropdown">--}}
 
 {{--                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">--}}
@@ -169,66 +183,70 @@
 
 {{--            </li><!-- End Messages Nav -->--}}
 
-            <li class="nav-item dropdown pe-3">
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="{{asset('assets/images/profile-icon.jpg')}}" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">{{last(explode(" ",auth()->user()->name))}}</span>
-                </a><!-- End Profile Iamge Icon -->
+           <!-- End Profile Nav -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>{{auth()->user()->name}}</h6>
-                        <span>{{ auth()->user()->getRoleNames()->first()}}</span>
+            @auth
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="{{asset('assets/images/profile-icon.jpg')}}" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{last(explode(" ",auth()->user()->name))}}</span>
+                    </a><!-- End Profile Iamge Icon -->
 
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>{{auth()->user()->name}}</h6>
+                            <span>{{ auth()->user()->getRoleNames()->first()}}</span>
 
-{{--                    <li>--}}
-{{--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">--}}
-{{--                            <i class="bi bi-person"></i>--}}
-{{--                            <span>My Profile</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <hr class="dropdown-divider">--}}
-{{--                    </li>--}}
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-{{--                    <li>--}}
-{{--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">--}}
-{{--                            <i class="bi bi-gear"></i>--}}
-{{--                            <span>Account Settings</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <hr class="dropdown-divider">--}}
-{{--                    </li>--}}
+                        {{--                    <li>--}}
+                        {{--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">--}}
+                        {{--                            <i class="bi bi-person"></i>--}}
+                        {{--                            <span>My Profile</span>--}}
+                        {{--                        </a>--}}
+                        {{--                    </li>--}}
+                        {{--                    <li>--}}
+                        {{--                        <hr class="dropdown-divider">--}}
+                        {{--                    </li>--}}
 
-{{--                    <li>--}}
-{{--                        <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">--}}
-{{--                            <i class="bi bi-question-circle"></i>--}}
-{{--                            <span>Need Help?</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                        {{--                    <li>--}}
+                        {{--                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">--}}
+                        {{--                            <i class="bi bi-gear"></i>--}}
+                        {{--                            <span>Account Settings</span>--}}
+                        {{--                        </a>--}}
+                        {{--                    </li>--}}
+                        {{--                    <li>--}}
+                        {{--                        <hr class="dropdown-divider">--}}
+                        {{--                    </li>--}}
 
-                    <li>
-                        <form action="{{ route('logout') }}" method="POST" style="display: none;" id="logout-form">
-                            @csrf
-                        </form>
+                        {{--                    <li>--}}
+                        {{--                        <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">--}}
+                        {{--                            <i class="bi bi-question-circle"></i>--}}
+                        {{--                            <span>Need Help?</span>--}}
+                        {{--                        </a>--}}
+                        {{--                    </li>--}}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                        <a class="dropdown-item d-flex align-items-center" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
-                        </a>
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST" style="display: none;" id="logout-form">
+                                @csrf
+                            </form>
 
-                    </li>
+                            <a class="dropdown-item d-flex align-items-center" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
 
-                </ul><!-- End Profile Dropdown Items -->
-            </li><!-- End Profile Nav -->
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li>
+            @endauth
 
         </ul>
     </nav><!-- End Icons Navigation -->
