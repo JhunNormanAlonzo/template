@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    $students = \App\Models\Student::all();
+    return view('index', compact('students'));
 });
 
 Auth::routes();
