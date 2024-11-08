@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
 
-Route::resource('students', \App\Http\Controllers\StudentController::class);
-Route::resource('school_years', \App\Http\Controllers\SchoolYearController::class);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function (){
+    Route::resource('students', \App\Http\Controllers\StudentController::class);
+    Route::resource('school_years', \App\Http\Controllers\SchoolYearController::class);
+    Route::resource('fees', \App\Http\Controllers\FeeController::class);
+    Route::resource('courses', \App\Http\Controllers\CourseController::class);
+
+    Route::resource('payments', \App\Http\Controllers\PaymentController::class);
+    Route::post('payments/fee-lists', [\App\Http\Controllers\PaymentController::class, 'feeLists'])->name('payments.fee-lists');
+    Route::post('payments/check-payment', [\App\Http\Controllers\PaymentController::class, 'checkPayment'])->name('payments.check-payment');
+    Route::post('payments/payment-logs', [\App\Http\Controllers\PaymentController::class, 'paymentLogs'])->name('payments.payment-logs');
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+
+

@@ -10,4 +10,10 @@ class SchoolYear extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+
+    public static function activated()
+    {
+        return self::where('activation', true)->first();
+    }
 }

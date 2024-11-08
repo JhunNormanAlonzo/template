@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fee;
+use App\Models\Payment;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $fees = Fee::where('activation', true)->count();
+        $students = Student::all();
+        $student_counts = Student::count();
+        $sales = Payment::sum('amount');
+
+        $payments = Payment::all();
+
+        return view('home', compact('fees', 'students', 'student_counts', 'sales', 'payments'));
     }
 }

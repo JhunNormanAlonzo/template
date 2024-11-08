@@ -3,7 +3,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link " href="{{route('home')}}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -26,7 +26,7 @@
                 </li>
 
                 <li>
-                    <a href="">
+                    <a href="{{route('students.index')}}">
                         <i class="bi bi-circle"></i>
                         <span>View Students</span>
                     </a>
@@ -40,14 +40,14 @@
             </a>
             <ul id="courses" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="">
+                    <a href="{{route('courses.create')}}">
                         <i class="bi bi-circle"></i>
                         <span>Create Course</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="">
+                    <a href="{{route('courses.index')}}">
                         <i class="bi bi-circle"></i>
                         <span>View Courses</span>
                     </a>
@@ -85,9 +85,15 @@
             </a>
             <ul id="transaction" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="">
+                    <a href="{{route('fees.create')}}">
                         <i class="bi bi-circle"></i>
-                        <span>Add Payment</span>
+                        <span>Add Fee</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('fees.index')}}">
+                        <i class="bi bi-circle"></i>
+                        <span>View Fee</span>
                     </a>
                 </li>
             </ul>
@@ -95,7 +101,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="">
+            <a class="nav-link collapsed" href="{{route('payments.index')}}">
                 <i class="bi bi-question-circle"></i>
                 <span>Logs</span>
             </a>
