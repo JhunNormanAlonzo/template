@@ -63,14 +63,16 @@
                         </x-thead>
                         <x-tbody>
                             @foreach($students as $student)
-                                <x-tr>
-                                    <x-td>{{$student->student_number}}</x-td>
-                                    <x-td>{{$student->course->name}}</x-td>
-                                    <x-td>{{$student->yearLevel->name}}</x-td>
-                                    <x-td>{{number_format($student->getBalance(), 2)}}</x-td>
-                                    <x-td>{{number_format($student->getTotalFees(), 2)}}</x-td>
-                                    <x-td>{{$student->getBalance() == 0 ? "Paid" : "Unpaid"}}</x-td>
-                                </x-tr>
+                                @if($student->getBalance() != "0")
+                                    <x-tr>
+                                        <x-td>{{$student->student_number}}</x-td>
+                                        <x-td>{{$student->course->name}}</x-td>
+                                        <x-td>{{$student->yearLevel->name}}</x-td>
+                                        <x-td>{{number_format($student->getBalance(), 2)}}</x-td>
+                                        <x-td>{{number_format($student->getTotalFees(), 2)}}</x-td>
+                                        <x-td>{{$student->getBalance() == 0 ? "Paid" : "Unpaid"}}</x-td>
+                                    </x-tr>
+                                @endif
                             @endforeach
                         </x-tbody>
                     </x-table>

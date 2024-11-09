@@ -38,7 +38,7 @@
                 </li>
             @else
                 <li class="nav-item dropdown">
-                    <a href="{{route('login')}}" class="btn btn-sm btn-warningg mx-3">Login</a>
+                    <a href="{{route('login')}}" class="btn btn-sm mx-3">Login</a>
                 </li>
             @endauth
 

@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function (){
     Route::resource('school_years', \App\Http\Controllers\SchoolYearController::class);
     Route::resource('fees', \App\Http\Controllers\FeeController::class);
     Route::resource('courses', \App\Http\Controllers\CourseController::class);
+    Route::resource('users', \App\Http\Controllers\UserController::class);
 
     Route::resource('payments', \App\Http\Controllers\PaymentController::class);
     Route::post('payments/fee-lists', [\App\Http\Controllers\PaymentController::class, 'feeLists'])->name('payments.fee-lists');
