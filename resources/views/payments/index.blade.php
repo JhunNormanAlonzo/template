@@ -14,6 +14,7 @@
         <div class="col-12">
             <x-table id="table" class="">
                 <x-thead>
+                    <x-th>Collector Name</x-th>
                     <x-th>Student Name</x-th>
                     <x-th>Student Number</x-th>
                     <x-th>Email</x-th>
@@ -26,6 +27,7 @@
                 <x-tbody>
                     @foreach($payments as $payment)
                         <x-tr>
+                            <x-td>{{$payment->collector->name}}</x-td>
                             <x-td>{{$payment->name}}</x-td>
                             <x-td>{{$payment->student_number}}</x-td>
                             <x-td>{{$payment->email}}</x-td>
@@ -58,7 +60,7 @@
                             orientation: "landscape",
                             pageSize: "A4",
                             exportOptions: {
-                                columns: [0,1,2,3,4,5,6,7] // Make sure this is correctly defined in your controller
+                                columns: [0,1,2,3,4,5,6,7,8] // Make sure this is correctly defined in your controller
                             },
                             customize: function(doc) {
                                 doc.pageMargins = [10, 10, 10, 10];

@@ -3,7 +3,7 @@
 <x-navbar></x-navbar>
 
 @section('page_title')
-    Course
+    User
 @endsection
 
 <x-sidebar></x-sidebar>
@@ -14,23 +14,25 @@
         <div class="col-12">
             <x-table id="table" class="">
                 <x-thead>
-                    <x-th>Course</x-th>
-                    <x-th>Description</x-th>
+                    <x-th>Name</x-th>
+                    <x-th>Email</x-th>
+                    <x-th>Role</x-th>
                     <x-th>Created At</x-th>
                     @role('Administrator')
                     <x-th>Action</x-th>
                     @endrole
                 </x-thead>
                 <x-tbody>
-                    @foreach($courses as $course)
+                    @foreach($users as $user)
                         <x-tr>
-                            <x-td>{{$course->name}}</x-td>
-                            <x-td>{{$course->description}}</x-td>
-                            <x-td>{{$course->created_at}}</x-td>
+                            <x-td>{{$user->name}}</x-td>
+                            <x-td>{{$user->email}}</x-td>
+                            <x-td>{{$user->getRoleNames()->first()}}</x-td>
+                            <x-td>{{$user->created_at}}</x-td>
                             @role('Administrator')
                             <x-td>
-                                <a class="btn btn-sm btn-secondary" href="{{route('courses.edit', [$course->id])}}"><i class="bi bi-pencil"></i></a>
-                                <a class="btn btn-sm btn-danger" href="{{route('courses.destroy', [$course->id])}}" data-confirm-delete="true"><i class="bi bi-trash"></i></a>
+                                <a class="btn btn-sm btn-secondary" href="{{route('users.edit', [$user->id])}}"><i class="bi bi-pencil"></i></a>
+                                <a class="btn btn-sm btn-danger" href="{{route('users.destroy', [$user->id])}}" data-confirm-delete="true"><i class="bi bi-trash"></i></a>
                             </x-td>
                             @endrole
                         </x-tr>

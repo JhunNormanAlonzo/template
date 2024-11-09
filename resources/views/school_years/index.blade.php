@@ -17,7 +17,9 @@
                     <x-th>School Year</x-th>
                     <x-th>Activation</x-th>
                     <x-th>Created At</x-th>
+                    @role('Administrator')
                     <x-th>Action</x-th>
+                    @endrole
                 </x-thead>
                 <x-tbody>
                     @foreach($school_years as $school_year)
@@ -31,10 +33,12 @@
                                 @endif
                             </x-td>
                             <x-td>{{$school_year->created_at}}</x-td>
+                            @role('Administrator')
                             <x-td>
                                 <a class="btn btn-sm btn-secondary" href="{{route('school_years.edit', [$school_year->id])}}"><i class="bi bi-pencil"></i></a>
                                 <a class="btn btn-sm btn-danger" href="{{route('school_years.destroy', [$school_year->id])}}" data-confirm-delete="true"><i class="bi bi-trash"></i></a>
                             </x-td>
+                            @endrole
                         </x-tr>
                     @endforeach
                 </x-tbody>
