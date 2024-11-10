@@ -33,9 +33,11 @@
 
 
             @auth
+                @can('accept payments')
                 <li class="nav-item dropdown">
                     <a href="{{route('payments.create')}}" class="btn btn-sm btn-warning mx-3">Payment</a>
                 </li>
+                @endcan
             @else
                 <li class="nav-item dropdown">
                     <a href="{{route('login')}}" class="btn btn-sm mx-3">Login</a>

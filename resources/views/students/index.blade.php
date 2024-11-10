@@ -20,9 +20,7 @@
                     <x-th>Course</x-th>
                     <x-th>Year Level</x-th>
                     <x-th>Created At</x-th>
-                    @role('Administrator')
                     <x-th>Action</x-th>
-                    @endrole
                 </x-thead>
                 <x-tbody>
                     @foreach($students as $student)
@@ -33,12 +31,20 @@
                             <x-td>{{$student->course->name}}</x-td>
                             <x-td>{{$student->yearLevel->name}}</x-td>
                             <x-td>{{$student->created_at}}</x-td>
-                            @role('Administrator')
+
                             <x-td>
-                                <a class="btn btn-sm btn-secondary" href="{{route('students.edit', [$student->id])}}"><i class="bi bi-pencil"></i></a>
-                                <a class="btn btn-sm btn-danger" href="{{route('students.destroy', [$student->id])}}" data-confirm-delete="true"><i class="bi bi-trash"></i></a>
+                                @canany(['edit students', 'delete students'])
+                                    @can('edit students')
+                                        <a class="btn btn-sm btn-secondary" href="{{route('students.edit', [$student->id])}}"><i class="bi bi-pencil"></i></a>
+                                    @endcan
+                                    @can('delete students')
+                                        <a class="btn btn-sm btn-danger" href="{{route('students.destroy', [$student->id])}}" data-confirm-delete="true"><i class="bi bi-trash"></i></a>
+                                    @endcan
+                                @else
+                                    No Granted Permission
+                                @endcanany
                             </x-td>
-                            @endrole
+
                         </x-tr>
                     @endforeach
                 </x-tbody>
