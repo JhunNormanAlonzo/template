@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Testing\Fluent\Concerns\Has;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Role;
 use function App\Providers\warningDelete;
@@ -83,7 +85,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => "required",
-            "email" => "required|email|unique:users,email",
+            "email" => "required|email|unique:users,email,{$user->id}",
         ]);
 
         $user->name = $request->name;
@@ -109,5 +111,35 @@ class UserController extends Controller
         $user->delete();
         Alert::success('Success', 'Deleted Successfully');
         return redirect()->route('users.index');
+    }
+
+    public function passwordReset(string $id): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $user = User::find($id);
+        $password = Str::random(10);
+        return view('users.password-reset', compact('user', 'password'));
+
+    }
+
+    public function updatePassword(Request $request, User $user): \Illuminate\Http\RedirectResponse
+    {
+        $request->validate([
+            'password' => 'required'
+        ]);
+
+
+        $user->password_reset = $request->password_reset;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+
+        Alert::success('Success', 'Password Updated Successfully');
+        return redirect('home');
+    }
+
+    public function changePassword(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $user = Auth::user();
+        return view('users.password-change', compact('user'));
     }
 }

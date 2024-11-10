@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
@@ -34,6 +35,9 @@ class UserSeeder extends Seeder
 
         $role = Role::where('name', "Administrator")->first();
 
-        $user->syncRoles([$role]);
+        $user->syncRoles($role);
+
+        $permissions = Permission::all();
+        $user->syncPermissions($permissions);
     }
 }
