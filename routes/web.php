@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-
+Route::get('/', function () {
+    $students = \App\Models\Student::all();
+    return view('index', compact('students'));
+})g;
 
 Route::middleware(['auth'])->group(function (){
 
@@ -37,10 +40,7 @@ Route::middleware(['auth'])->group(function (){
         Route::post('payments/check-payment', [\App\Http\Controllers\PaymentController::class, 'checkPayment'])->name('payments.check-payment');
         Route::post('payments/payment-logs', [\App\Http\Controllers\PaymentController::class, 'paymentLogs'])->name('payments.payment-logs');
 
-        Route::get('/', function () {
-            $students = \App\Models\Student::all();
-            return view('index', compact('students'));
-        });
+
 
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     });
