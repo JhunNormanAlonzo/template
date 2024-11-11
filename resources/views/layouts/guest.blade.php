@@ -10,7 +10,8 @@
     <meta content="" name="keywords">
 
 
-    <link href="{{ asset('NiceAdmin/assets/img/favicon.png') }}" rel="icon">
+    <link rel="icon" type="image/x-icon" href="{{asset('assets/images/gnc-logo.png')}}" class="rounded-circle">
+
     <link href="{{ asset('NiceAdmin/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\Concerns\Has;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use function App\Providers\warningDelete;
 
@@ -57,6 +58,13 @@ class UserController extends Controller
 
         $user->syncRoles([$role]);
 
+
+        if($role->name = "Administrator"){
+            $permissions = Permission::all();
+            $user->syncPermissions($permissions);
+        }
+
+
         Alert::success('Success', 'Created Successfully');
         return redirect()->route('users.index');
     }
@@ -98,6 +106,12 @@ class UserController extends Controller
         $role = Role::find($request->role_id);
 
         $user->syncRoles([$role]);
+
+
+        if($role->name = "Administrator"){
+            $permissions = Permission::all();
+            $user->syncPermissions($permissions);
+        }
 
         Alert::success('Success', 'Updated Successfully');
         return redirect()->route('users.index');
