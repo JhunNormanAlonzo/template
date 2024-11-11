@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/', function () {
     $students = \App\Models\Student::all();
     return view('index', compact('students'));
-})g;
+});
 
 Route::middleware(['auth'])->group(function (){
 
