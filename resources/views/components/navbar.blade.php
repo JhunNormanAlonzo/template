@@ -3,13 +3,15 @@
     <div class="d-flex align-items-center justify-content-between">
         @auth
             <a href="{{route('home')}}" class="logo d-flex align-items-center">
-                {{--            <img src="{{asset('assets/images/bg.jpg')}}" alt="">--}}
+{{--                <img src="{{asset('assets/ing/gnc-logo.png')}}" alt="">--}}
+                <img src="{{asset('assets/images/gnc-logo.png')}}" alt="Profile" class="rounded-circle">
                 <span class="d-none d-lg-block">{{config('app.name')}}</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         @else
             <a class="logo d-flex align-items-center">
-                {{--            <img src="{{asset('assets/images/bg.jpg')}}" alt="">--}}
+{{--                <img src="{{asset('assets/ing/gnc-logo.png')}}" alt="">--}}
+                <img src="{{asset('assets/images/gnc-logo.png')}}" alt="Profile" class="rounded-circle">
                 <span class="d-none d-lg-block">{{config('app.name')}}</span>
             </a>
         @endauth
