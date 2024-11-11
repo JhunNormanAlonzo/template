@@ -35,7 +35,7 @@
                                             <div class="card-body text-center py-4 bg-dark">
                                                 <h5 class="text-white">{{$password}}</h5>
                                                 <input type="text" value="{{$password}}" name="password" hidden>
-                                                <input type="text" value="1" name="password_resetg" hidden>
+                                                <input type="text" value="1" name="password_reset" hidden>
                                                 <small class="text-warning">Please copy the password</small>
                                             </div>
 
